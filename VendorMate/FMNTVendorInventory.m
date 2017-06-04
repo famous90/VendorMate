@@ -11,11 +11,13 @@
 
 @interface FMNTVendorInventory () <SKPaymentTransactionObserver>
 
-@property (nonatomic, strong) NSMutableArray *vendorTransactions;
+@property (nonatomic, strong) NSMutableArray<SKPaymentTransaction *> *vendorTransactions;
 
 @end
 
 @implementation FMNTVendorInventory
+
+#pragma mark - External
 
 + (instancetype)sharedInstance
 {
@@ -26,6 +28,8 @@
     });
     return sharedInstance;
 }
+
+#pragma mark - Internal
 
 - (instancetype)init
 {
@@ -44,48 +48,96 @@
 
 - (void)addTransactionWithTransaction:(SKPaymentTransaction *)transaction
 {
+    // without transaction id
+    // OR no stored transaction
+    if (!transaction.transactionIdentifier ||
+        ![self.vendorTransactions count]) {
+        [self.vendorTransactions addObject:transaction];
+        return;
+    }
     
+    // not to duplicate
+    BOOL hasTransaction = NO;
+    NSUInteger index = 0;
+    for (NSUInteger i = 0; i < [self.vendorTransactions count]; i++) {
+        SKPaymentTransaction *theTransaction = [self.vendorTransactions objectAtIndex:i];
+        if ([theTransaction.transactionIdentifier isEqualToString:transaction.transactionIdentifier]) {
+            index = i;
+            hasTransaction = YES;
+            break;
+        }
+    }
+    if (hasTransaction) {
+        [self.vendorTransactions replaceObjectAtIndex:index withObject:transaction];
+        return;
+    }
+    
+    [self.vendorTransactions addObject:transaction];
+}
+
+- (void)removeTransactionOfTransaction:(SKPaymentTransaction *)transaction
+{
+    if (transaction) {
+        [self.vendorTransactions removeObject:transaction];
+    }
 }
 
 - (void)removeTransactionOfTransactionId:(NSString *)transactionId
 {
+    // search
+    SKPaymentTransaction *removedTransaction;
+    for (SKPaymentTransaction *transaction in self.vendorTransactions) {
+        if ([transaction.payment.productIdentifier isEqualToString:transactionId]) {
+            removedTransaction = transaction;
+            break;
+        }
+    }
     
+    // remove
+    if (removedTransaction) {
+        [self.vendorTransactions removeObject:removedTransaction];
+    }
+}
+
+- (NSString *)description
+{
+    NSMutableString *description = [[NSMutableString alloc] init];
+    [description appendString:@"++++++++++++++++++++++++++++++++++++++++++"];
+    [description appendFormat:@"[Inventory] %tu transactions are stored", [self.vendorTransactions count]];
+    if (self.vendorTransactions &&
+        [self.vendorTransactions count]) {
+        for (SKPaymentTransaction *transaction in self.vendorTransactions) {
+            [description appendFormat:@"[Inventory] transaction: %@", [self descriptionOfTransaction:transaction]];
+        }
+    }
+    [description appendString:@"++++++++++++++++++++++++++++++++++++++++++"];
+    return [description copy];
 }
 
 #pragma mark - SKPayment Transaction Delegate
 - (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray<SKPaymentTransaction *> *)transactions
 {
-    NSLog(@"[AppStore] %tu txs were updated from vendor", transactions.count);
+    NSLog(@"[AppStore] %tu txs were updated from vendor", [transactions count]);
     for (SKPaymentTransaction *transaction in transactions) {
         
-        NSLog(@"[AppStore] will update tx: %@", [self descriptionOfTransaction:transaction]);
-        SKPaymentTransactionState transactionState = transaction.transactionState;
+        NSLog(@"[AppStore] will update transaction: %@", [self descriptionOfTransaction:transaction]);
         
-        // storing transactions
-        [self addTransactionToInventory:transaction];
-        
-        // neccesary state : purchased, failed, restored. not use: purchasing, deferred.
-        if (transactionState == SKPaymentTransactionStatePurchased ||
-            transactionState == SKPaymentTransactionStateFailed ||
-            transactionState == SKPaymentTransactionStateRestored) {
-            
-            // paying transaction
-            if (self.paymentProductId &&
-                [transaction.payment.productIdentifier isEqualToString:self.paymentProductId]) {
-                if (self.paymentCompletion) {
-                    self.paymentCompletion(transaction);
-                    self.paymentProductId = nil;
-                    self.paymentCompletion = nil;
-                }
-            }
-        }
+        // store
+        [self addTransactionWithTransaction:transaction];
     }
-    [self description];
+    NSLog(@"[AppStore] did finish update transactions \n%@", [self description]);
 }
 
 - (void)paymentQueue:(SKPaymentQueue *)queue removedTransactions:(NSArray<SKPaymentTransaction *> *)transactions
 {
-    
+    NSLog(@"[AppStore] %tu transactions were removed from vendor", [transactions count]);
+    for (SKPaymentTransaction *transaction in transactions) {
+        NSLog(@"[AppStore] will remove transaction, %@", [self descriptionOfTransaction:transaction]);
+
+        // remove
+        [self removeTransactionOfTransaction:transaction];
+    }
+    NSLog(@"[AppStore] did finish remove transactions \n%@", [self description]);
 }
 
 #pragma mark - SKPayment Transaction

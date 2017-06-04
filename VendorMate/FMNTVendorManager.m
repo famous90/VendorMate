@@ -7,6 +7,7 @@
 //
 
 #import "FMNTVendorManager.h"
+#import "FMNTVendorInventory.h"
 
 @implementation FMNTVendorManager
 
@@ -24,7 +25,8 @@
 {
     self = [super init];
     if (self) {
-        
+        // initailize vendor inventory
+        [FMNTVendorInventory sharedInstance];
     }
     return self;
 }
