@@ -8,8 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+@class SKPaymentTransaction;
+
 @interface FMNTVendorInventory : NSObject
 
 + (instancetype)sharedInstance;
+- (NSArray <SKPaymentTransaction *> *)purchasedTransactions;
 
 @end

@@ -29,6 +29,17 @@
     return sharedInstance;
 }
 
+- (NSArray <SKPaymentTransaction *> *)purchasedTransactions
+{
+    NSMutableArray *transactions = [NSMutableArray array];
+    for (SKPaymentTransaction *transaction in self.vendorTransactions) {
+        if (transaction.transactionState == SKPaymentTransactionStatePurchased) {
+            [transactions addObject:transaction];
+        }
+    }
+    return [transactions copy];
+}
+
 #pragma mark - Internal
 
 - (instancetype)init

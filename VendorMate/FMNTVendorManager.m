@@ -11,6 +11,8 @@
 
 @implementation FMNTVendorManager
 
+#pragma mark - External
+
 + (instancetype)sharedInstance
 {
     static id sharedInstance = nil;
@@ -20,6 +22,37 @@
     });
     return sharedInstance;
 }
+
+- (void)productsWithProductIds:(NSArray *)productIds completionHandler:(void(^)(NSArray <SKProduct *> *products, NSError *error))completionHandler
+{
+    
+}
+
+- (void)purchaseProductWithProductId:(NSString *)productId applicationUsername:(NSString *)username completionHandler:(void(^)(NSString *transactionId, NSString *receipt, NSError *error))completionHandler
+{
+    
+}
+
+- (void)receiptWithCompletionHandler:(void(^)(NSString *receipt, NSError *error))completionHandler
+{
+    
+}
+
+- (void)consumeProductWithTransactionId:(NSString *)transactionId completionHandler:(void(^)(NSError * error))completionHandler
+{
+    
+}
+
+- (void)purchasedTransactionWithCompletionHandler:(void (^)(NSArray<SKPaymentTransaction *> *))completionHandler
+{
+    NSArray *transactions = [[FMNTVendorInventory sharedInstance] purchasedTransactions];
+    
+    if (completionHandler) {
+        completionHandler(transactions);
+    }
+}
+
+#pragma mark - Internal
 
 - (instancetype)init
 {
