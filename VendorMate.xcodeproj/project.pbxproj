@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C10C3B8A1EE6E26500AA85CF /* FMNTVendorProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = C10C3B891EE6E26500AA85CF /* FMNTVendorProduct.m */; };
+		C10C3B8D1EE6FBDE00AA85CF /* FMNTConstant.m in Sources */ = {isa = PBXBuildFile; fileRef = C10C3B8C1EE6FBDE00AA85CF /* FMNTConstant.m */; };
 		C1CA54B51EE3F62D00636441 /* VendorMate.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CA54B41EE3F62D00636441 /* VendorMate.m */; };
 		C1CA54B61EE3F62D00636441 /* VendorMate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C1CA54B31EE3F62D00636441 /* VendorMate.h */; };
 		C1CA54C01EE3F6B200636441 /* FMNTVendorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C1CA54BF1EE3F6B200636441 /* FMNTVendorManager.m */; };
@@ -28,6 +30,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C10C3B881EE6E26500AA85CF /* FMNTVendorProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMNTVendorProduct.h; sourceTree = "<group>"; };
+		C10C3B891EE6E26500AA85CF /* FMNTVendorProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMNTVendorProduct.m; sourceTree = "<group>"; };
+		C10C3B8B1EE6FBDE00AA85CF /* FMNTConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMNTConstant.h; sourceTree = "<group>"; };
+		C10C3B8C1EE6FBDE00AA85CF /* FMNTConstant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMNTConstant.m; sourceTree = "<group>"; };
 		C1CA54B01EE3F62D00636441 /* libVendorMate.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libVendorMate.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1CA54B31EE3F62D00636441 /* VendorMate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VendorMate.h; sourceTree = "<group>"; };
 		C1CA54B41EE3F62D00636441 /* VendorMate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VendorMate.m; sourceTree = "<group>"; };
@@ -76,6 +82,10 @@
 				C1CA54BF1EE3F6B200636441 /* FMNTVendorManager.m */,
 				C1CA54C11EE3F80E00636441 /* FMNTVendorInventory.h */,
 				C1CA54C21EE3F80E00636441 /* FMNTVendorInventory.m */,
+				C10C3B881EE6E26500AA85CF /* FMNTVendorProduct.h */,
+				C10C3B891EE6E26500AA85CF /* FMNTVendorProduct.m */,
+				C10C3B8B1EE6FBDE00AA85CF /* FMNTConstant.h */,
+				C10C3B8C1EE6FBDE00AA85CF /* FMNTConstant.m */,
 			);
 			path = VendorMate;
 			sourceTree = "<group>";
@@ -146,7 +156,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1CA54C01EE3F6B200636441 /* FMNTVendorManager.m in Sources */,
+				C10C3B8D1EE6FBDE00AA85CF /* FMNTConstant.m in Sources */,
 				C1CA54C31EE3F80E00636441 /* FMNTVendorInventory.m in Sources */,
+				C10C3B8A1EE6E26500AA85CF /* FMNTVendorProduct.m in Sources */,
 				C1CA54B51EE3F62D00636441 /* VendorMate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -281,6 +293,7 @@
 				C1CA54BB1EE3F62D00636441 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
