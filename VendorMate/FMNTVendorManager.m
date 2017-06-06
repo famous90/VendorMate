@@ -11,7 +11,7 @@
 
 @implementation FMNTVendorManager
 
-#pragma mark - External
+#pragma mark - Public methods
 
 + (instancetype)sharedInstance
 {
@@ -52,7 +52,7 @@
     }
 }
 
-#pragma mark - Internal
+#pragma mark - Private methods
 
 - (instancetype)init
 {
